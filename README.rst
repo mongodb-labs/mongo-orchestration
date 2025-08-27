@@ -245,6 +245,12 @@ Run a single test example for debugging with verbose and immediate stdout output
 Changelog
 ---------
 
+Changes in Version 0.11.1 (2025-08-27)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Fix a bug where automatic port assignment would give the same port to two
+  different mongodb servers leading to errors such as ``Found two member configurations with same host field``.
+
 Changes in Version 0.11.0 (2024-12-30)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
