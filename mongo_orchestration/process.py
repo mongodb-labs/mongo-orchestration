@@ -53,9 +53,10 @@ class PortPool(Singleton):
             max_port - max port number  (ignoring if 'port_sequence' is not None)
             port_sequence - iterate sequence which contains numbers of ports
         """
-        if not self.__id:  # singleton checker
-            self.__id = id(self)
-            self.__init_range(min_port, max_port, port_sequence)
+        with self._lock:
+            if not self.__id:  # singleton checker
+                self.__id = id(self)
+                self.__init_range(min_port, max_port, port_sequence)
 
     def __init_range(self, min_port=1025, max_port=2000, port_sequence=None):
         if port_sequence:
@@ -87,21 +88,21 @@ class PortPool(Singleton):
     def port(self, check=False):
         """return next opened port
         Args:
-          check - check is port realy free
+          check - check is port really free
         """
-        if not self.__ports:  # refresh ports if sequence is empty
-            self.refresh()
+        with self._lock:
+            if not self.__ports:  # refresh ports if sequence is empty
+                self.refresh()
 
-        try:
-            port = self.__ports.pop()
-            if check:
-                while not self.__check_port(port):
-                    self.release_port(port)
+            try:
+                while True:
                     port = self.__ports.pop()
-        except (IndexError, KeyError):
-            raise IndexError("Could not find a free port,\nclosed ports: {closed}".format(closed=self.__closed))
-        self.__closed.add(port)
-        return port
+                    self.__closed.add(port)
+                    if check and not self.__check_port(port):
+                        continue
+                    return port
+            except (IndexError, KeyError):
+                raise IndexError("Could not find a free port,\nclosed ports: {closed}".format(closed=self.__closed))
 
     def refresh(self, only_closed=False):
         """refresh ports status
