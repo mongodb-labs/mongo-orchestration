@@ -30,6 +30,7 @@ def run(cmd, **kwargs):
 def stop():
     pid = Path("server.pid").read_text().strip()
     os.kill(int(pid), signal.SIGTERM)
+    Path("server.pid").unlink()
 
 class TestLaunch(unittest.TestCase):
 
