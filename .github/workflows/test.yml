@@ -25,8 +25,8 @@ jobs:
           options:
           - ["Other", "--ignore=tests/test_replica_set.py --ignore=tests/test_replica_sets.py --ignore=tests/test_sharded_clusters.py", "3.9"]
           - ["Replica Set", "tests/test_replica_set.py", "3.10"]
-          - ["Replica Sets", "tests/test_replica_sets.py", "3.11"]
-          - ["Sharded", "tests/test_sharded_clusters.py", "3.13"]
+          - ["Replica Sets", "tests/test_replica_sets.py", "3.12"]
+          - ["Sharded", "tests/test_sharded_clusters.py", "3.14"]
     steps:
       - uses: actions/checkout@v4
       - name: Setup Python
