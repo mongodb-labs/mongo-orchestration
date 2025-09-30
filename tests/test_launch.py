@@ -36,6 +36,7 @@ class TestLaunch(unittest.TestCase):
         proc.send('q\n')
         proc.wait()
         self.assertEqual(proc.exitstatus, 0)
+        run('mongo-orchestration stop')
 
     def test_launch_replica_set(self):
         if os.name != 'posix':
@@ -46,6 +47,7 @@ class TestLaunch(unittest.TestCase):
         proc.send('q\n')
         proc.wait()
         self.assertEqual(proc.exitstatus, 0)
+        run('mongo-orchestration stop')
 
     def test_launch_sharded(self):
         if os.name != 'posix':
@@ -56,3 +58,4 @@ class TestLaunch(unittest.TestCase):
         proc.send('q\n')
         proc.wait()
         self.assertEqual(proc.exitstatus, 0)
+        run('mongo-orchestration stop')
