@@ -45,8 +45,7 @@ dependencies = [
 [project.optional-dependencies]
 test = [
     "pexpect",
-    "pytest",
-    "pytest-timeout"
+    "pytest"
 ]
 
 [project.scripts]
