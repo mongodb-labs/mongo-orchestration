@@ -44,7 +44,6 @@ dependencies = [
 
 [project.optional-dependencies]
 test = [
-    "coverage>=3.5",
     "pexpect",
     "pytest",
     "pytest-timeout"
@@ -73,4 +72,3 @@ fail_under = 84
 
 [tool.pytest.ini_options]
 addopts = ["-raXs", "-v", "--durations", "10", "--color=yes"]
-timeout = 300
