@@ -17,6 +17,8 @@ import os
 import shlex
 import pexpect
 import subprocess
+import signal
+from pathlib import Path
 import unittest
 
 def run(cmd, **kwargs):
@@ -24,6 +26,11 @@ def run(cmd, **kwargs):
     if proc.returncode != 0:
         raise RuntimeError('Process failed!')
 
+
+def stop():
+    pid = Path("server.pid").read_text().strip()
+    os.kill(int(pid), signal.SIGTERM)
+    Path("server.pid").unlink()
 
 class TestLaunch(unittest.TestCase):
 
@@ -36,7 +43,9 @@ class TestLaunch(unittest.TestCase):
         proc.send('q\n')
         proc.wait()
         self.assertEqual(proc.exitstatus, 0)
-        run('mongo-orchestration stop')
+        # TODO: https://jira.mongodb.org/browse/PYTHON-5594
+        # run('mongo-orchestration stop')
+        stop()
 
     def test_launch_replica_set(self):
         if os.name != 'posix':
@@ -47,7 +56,10 @@ class TestLaunch(unittest.TestCase):
         proc.send('q\n')
         proc.wait()
         self.assertEqual(proc.exitstatus, 0)
-        run('mongo-orchestration stop')
+        # TODO: https://jira.mongodb.org/browse/PYTHON-5594
+        # run('mongo-orchestration stop')
+        stop()
+        
 
     def test_launch_sharded(self):
         if os.name != 'posix':
@@ -58,4 +70,6 @@ class TestLaunch(unittest.TestCase):
         proc.send('q\n')
         proc.wait()
         self.assertEqual(proc.exitstatus, 0)
-        run('mongo-orchestration stop')
+        # TODO: https://jira.mongodb.org/browse/PYTHON-5594
+        # run('mongo-orchestration stop')
+        stop()
