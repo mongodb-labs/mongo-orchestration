@@ -22,7 +22,7 @@ import subprocess
 import sys
 import time
 
-from signal import SIGTERM, SIGKILL
+from signal import SIGTERM
 
 DEVNULL = open(os.devnull, 'r+b')
 
@@ -174,15 +174,8 @@ class Daemon(object):
             # Try killing the daemon process
             try:
                 os.kill(pid, SIGTERM)
-                t0 = time.time()
                 while is_unix_process_running(pid):
                     time.sleep(0.25)
-                    # After 5 seconds resend a SIGTERM to the process.
-                    if time.time() - t0 > 5:
-                        os.kill(pid, SIGTERM)
-                    # After 10 seconds send a SIGKILL to the process.
-                    if time.time() - t0 > 10:
-                        os.kill(pid, SIGKILL)
             except OSError as err:
                 if err.errno == errno.ESRCH:
                     if os.path.exists(self.pidfile):
@@ -216,3 +209,4 @@ def is_unix_process_running(pid):
         else:
             raise err
     return True
+
