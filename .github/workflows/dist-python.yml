@@ -23,6 +23,9 @@ defaults:
   run:
     shell: bash -eux {0}
 
+permissions:
+  contents: write
+
 jobs:
   make_dist:
     name: Make Dist

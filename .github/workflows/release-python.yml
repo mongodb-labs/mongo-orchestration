@@ -58,6 +58,8 @@ jobs:
   build-dist:
     needs: [pre-publish]
     uses: ./.github/workflows/dist-python.yml
+    permissions:
+      contents: write
     with:
       ref: ${{ needs.pre-publish.outputs.version }}
 
