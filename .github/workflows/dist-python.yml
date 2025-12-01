@@ -28,9 +28,7 @@ jobs:
     name: Make Dist
     runs-on: macos-latest
     permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v5
+      contents: write      - uses: actions/checkout@v6
         with:
           persist-credentials: false
 
