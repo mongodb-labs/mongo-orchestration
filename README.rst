@@ -245,6 +245,12 @@ Run a single test example for debugging with verbose and immediate stdout output
 Changelog
 ---------
 
+Changes in Version 0.11.2 (2026-02-25)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Fix a bug where starting a sharded cluster with many shards could fail with
+  ``{'ok': 0.0, 'errmsg': 'Another addShard with different arguments is already running with different options', 'code': 117, 'codeName': 'ConflictingOperationInProgress'}``.
+
 Changes in Version 0.11.1 (2025-08-27)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
