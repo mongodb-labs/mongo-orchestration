@@ -17,6 +17,7 @@
 import logging
 import os
 import tempfile
+import threading
 
 from uuid import uuid4
 
@@ -53,6 +54,7 @@ class ShardedCluster(BaseModel):
         self._routers = []
         self._shards = {}
         self.tags = {}
+        self._lock = threading.Lock()
 
         self.sslParams = params.get('sslParams', {})
         self.kwargs = {}
@@ -383,7 +385,9 @@ class ShardedCluster(BaseModel):
 
     def _add(self, shard_uri, name):
         """execute addShard command"""
-        return self.router_command("addShard", (shard_uri, {"name": name}), is_eval=False)
+        # MongoDB only allows a single addShard at once, so we need to serialize them.
+        with self._lock:
+            return self.router_command("addShard", (shard_uri, {"name": name}), is_eval=False)
 
     def member_add(self, member_id=None, params=None):
         """add new member into existing configuration"""
