@@ -212,6 +212,60 @@ with minimal configuration.
     mongo-orchestration start
     mongo-launch replica ssl auth
 
+MCP Server
+----------
+
+Mongo Orchestration ships an `MCP (Model Context Protocol) <https://modelcontextprotocol.io>`__
+server that exposes three tools to AI assistants (e.g. Claude Code):
+
+-  **start_cluster** - start a standalone mongod, replica set, or sharded cluster
+-  **stop_cluster** - stop a cluster by ID
+-  **list_clusters** - list all running clusters with their URIs
+
+The MCP server starts ``mongo-orchestration`` automatically if it is not
+already running.
+
+Configuration
+~~~~~~~~~~~~~
+
+Register the server globally in Claude Code by adding the following to
+``~/.claude.json``::
+
+    "mcpServers": {
+        "mongo-launch": {
+            "type": "stdio",
+            "command": "/path/to/venv/bin/python",
+            "args": ["-m", "mongo_orchestration.mcp_server"]
+        }
+    }
+
+Multi-version support
+~~~~~~~~~~~~~~~~~~~~~
+
+To start clusters using specific MongoDB versions, create a
+``mo-config.json`` file at the root of the project and map version
+labels to binary directories::
+
+    {
+        "releases": {
+            "4.4": "/path/to/mongodb-4.4/bin",
+            "7.0": "/path/to/mongodb-7.0/bin",
+            "8.2": "/path/to/mongodb-8.2/bin"
+        }
+    }
+
+When this file is present, ``mongo-orchestration-mcp`` picks it up
+automatically on startup. You can also use
+`m <https://github.com/aheckmann/m>`__ as a MongoDB version manager and
+point each release to ``~/.local/m/versions/<version>/bin``.
+
+Standalone entry point
+~~~~~~~~~~~~~~~~~~~~~~
+
+The MCP server can also be started directly::
+
+    mongo-orchestration-mcp
+
 Tests
 -----
 
