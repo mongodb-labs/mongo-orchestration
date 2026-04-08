@@ -169,8 +169,6 @@ def host_command(host_id):
 
 
 ROUTES = {
-    Route('/', method='GET'): base_uri,
-    Route('/releases', method='GET'): releases_list,
     Route('/servers', method='POST'): host_create,
     Route('/servers', method='GET'): host_list,
     Route('/servers/<host_id>', method='GET'): host_info,
@@ -179,7 +177,13 @@ ROUTES = {
     Route('/servers/<host_id>', method='POST'): host_command
 }
 
-setup_versioned_routes(ROUTES, version='v1')
+# Routes only available under the versioned prefix (/v1/).
+_V1_ONLY_ROUTES = {
+    Route('/', method='GET'): base_uri,
+    Route('/releases', method='GET'): releases_list,
+}
+
+setup_versioned_routes({**ROUTES, **_V1_ONLY_ROUTES}, version='v1')
 # Assume v1 if no version is specified.
 setup_versioned_routes(ROUTES)
 

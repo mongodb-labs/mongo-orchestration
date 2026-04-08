@@ -97,7 +97,8 @@ def get_app():
     """return bottle app that includes all sub-apps"""
     from bottle import default_app
     default_app.push()
-    for module in ("mongo_orchestration.apps.servers",
+    for module in ("mongo_orchestration.apps.home",
+                   "mongo_orchestration.apps.servers",
                    "mongo_orchestration.apps.replica_sets",
                    "mongo_orchestration.apps.sharded_clusters"):
         __import__(module)
