@@ -23,8 +23,8 @@ jobs:
           # Github Actions doesn't support pairing matrix values together, let's improvise
           # https://github.com/github/feedback/discussions/7835#discussioncomment-1769026
           options:
-          - ["Other", "--ignore=tests/test_replica_set.py --ignore=tests/test_replica_sets.py --ignore=tests/test_sharded_clusters.py", "3.9"]
-          - ["Replica Set", "tests/test_replica_set.py", "3.10"]
+          - ["Other", "--ignore=tests/test_replica_set.py --ignore=tests/test_replica_sets.py --ignore=tests/test_sharded_clusters.py", "3.11"]
+          - ["Replica Set", "tests/test_replica_set.py", "3.11"]
           - ["Replica Sets", "tests/test_replica_sets.py", "3.12"]
           - ["Sharded", "tests/test_sharded_clusters.py", "3.14"]
     steps:

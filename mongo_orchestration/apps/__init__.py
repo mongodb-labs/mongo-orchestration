@@ -25,11 +25,8 @@ from bottle import route, response
 
 sys.path.insert(0, '..')
 
-from mongo_orchestration.compat import reraise, PY3
+from mongo_orchestration.compat import reraise
 from mongo_orchestration.errors import RequestError
-
-if PY3:
-    unicode = str
 
 logger = logging.getLogger(__name__)
 
