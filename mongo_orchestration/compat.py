@@ -12,13 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sys
-
-PY3 = (sys.version_info[0] == 3)
-
-if PY3:
-    def reraise(exctype, value, trace=None):
-        raise exctype(str(value)).with_traceback(trace)
-else:
-    exec("""def reraise(exctype, value, trace=None):
-    raise exctype, str(value), trace""")
+def reraise(exctype, value, trace=None):
+    raise exctype(str(value)).with_traceback(trace)
